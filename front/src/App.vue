@@ -27,7 +27,11 @@
 
       <v-spacer></v-spacer>
 
-  
+        <v-btn  @click="logout">logOut
+          <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
+        
+      
     </v-app-bar>
 
     <v-main>
@@ -44,5 +48,10 @@ export default {
   data: () => ({
     //
   }),
+   methods: {
+    logout () {
+      this.$store.dispatch('logout')
+    }
+   }
 };
 </script>

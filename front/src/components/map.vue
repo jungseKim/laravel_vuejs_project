@@ -1,60 +1,75 @@
 <template>
-       <div>
-              <input type="text" v-model="lr"/>
-              <input type="text" v-model="rr"/>
-              <button class="primary-btn" @click="hi">확인</button>
-              <h1>위도{{ lr }} 경도 {{rr}}</h1>
-        <div id="map" style="width:500px;height:400px;"></div>
-       </div>
-     
+  <div id="app">
+         <input v-model="search"/>
+         <v-btn @click="moveMap">확인</v-btn>
+         <v-tab></v-tab>
+    <div id="map"></div>
+  </div>
 </template>
 
 <script>
 export default {
        data(){
               return{
-                     lr:' ',
-                     rr:'dkkd'
+                     search:'',
+                     map:null,
+                     Places:null
               }
        },
-       computed:{
-              go(){
-                     return this.lr
-              }
-       },
-     mounted() {
-    if (window.kakao && window.kakao.maps) {
-       this.hi()
-      this.initMap()
-     
-    } else {
-           console.log('aa')
-      const script = document.createElement('script')
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=4b8bcafd1f73380351109f8a5f9d8518'
-      document.head.appendChild(script)
+    mounted() {
+        if (window.kakao && window.kakao.maps) {
+            this.initMap();
+        } else {
+            const script = document.createElement('script');
+            /* global kakao */
+            script.onload = () => kakao.maps.load(this.initMap);
+            script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=4b8bcafd1f73380351109f8a5f9d8518&&libraries=services';
+            document.head.appendChild(script);
+        }
+    },
+    methods: {
+        initMap() {
+            var container = document.getElementById('map');
+            var options = {
+              center: new kakao.maps.LatLng(33.450701, 126.570667),
+              level: 3
+            };
 
-   }
-  },
-  methods: {
-    initMap () {
-           console.log('aaaaaaa');
-      const container = document.querySelector('#map')
-      const options = {
-        center: new kakao.maps.LatLng(35.19656853772262, 129.0807270648317),
-        level: 3
-      }
-      const map = new kakao.maps.Map(container, options)
-      const markerPosition = new kakao.maps.LatLng(35.19656853772262, 129.0807270648317);
+            this.map = new kakao.maps.Map(container, options);
+            //실제 화면 
+       //      this.map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
+            
+            this.Places= new kakao.maps.services.Places();
+        },
+         moveMap(){
+              // let ps = new kakao.maps.services.Places();
+              console.log(this.Places)
+              this.Places.keywordSearch(this.search, this.placesSearchCB); 
+              this.search='';
+           },
+        placesSearchCB (data, status,) {
+                     if (status === kakao.maps.services.Status.OK) {
 
-      const marker = new kakao.maps.Marker({
-        position: markerPosition
-      });
-      marker.setMap(map)
-  } ,
-  hi(){
-         console.log('aaaa');
-  }
-}
+                            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                            // LatLngBounds 객체에 좌표를 추가합니다
+                            var bounds = new kakao.maps.LatLngBounds();
+
+                            for (var i=0; i<data.length; i++) {
+                            // displayMarker(data[i]);    
+                            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                            }       
+
+                            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                            this.map.setBounds(bounds);
+                     } 
+                 }
+    },
 }
 </script>
+
+<style>
+#map {
+    width: 400px;
+    height: 300px;
+}
+</style>
