@@ -4,8 +4,6 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
-axios.defaults.baseURL = 'http://localhost:8000/api'
-
 export default new Vuex.Store({
   state: {
     user: null
@@ -18,19 +16,35 @@ export default new Vuex.Store({
       axios.defaults.headers.common.Authorization = `Bearer ${userData.token}`
     },
 
-    clearUserData () {
+    clearUserData(state) {
+      state.user = null;
       localStorage.removeItem('user')
       location.reload()
     }
   },
 
   actions: {
-    login ({ commit }, credentials) {
-      return axios
-        .post('/login', credentials)
-        .then(({ data }) => {
-          commit('setUserData', data)
-        })
+    async login ({ commit }, credentials) {
+      // axios.get('/sanctum/csrf-cookie')
+      //   .then(response => {
+      //     axios.defaults.baseURL = 'http://localhost:8000/api'
+      //     console.log('Hi~:' + response)
+      //    return axios
+      //   .post('/login', credentials)
+      //   .then(({ data }) => {
+      //     commit('setUserData', data)
+      //   })
+      //   }).catch(err => {
+      //     console.log(err);
+      // })
+      try {
+        const response = await axios.get('http://localhost:8000/sanctum/csrf-cookie')
+      console.log(response.status);
+     const {data}= await axios.post('/login', credentials)
+      commit('setUserData', data);
+      } catch (err) {
+        console.error(err);
+      }
     },
 
     logout ({ commit }) {

@@ -27,7 +27,16 @@
 
       <v-spacer></v-spacer>
 
-        <v-btn  @click="logout">logOut
+      <v-btn v-if="$store.state.user" @click="write" 
+      class="mr-4">write
+          <v-icon>fa-edit</v-icon>
+        </v-btn>
+  
+      <v-btn v-if="$store.state.user==null" @click="login">login
+          <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
+
+        <v-btn v-else @click="logout">logOut
           <v-icon>mdi-open-in-new</v-icon>
         </v-btn>
         
@@ -48,9 +57,23 @@ export default {
   data: () => ({
     //
   }),
+  computed:{
+      check(){
+        if(!localStorage.getItem('user')){
+          return true;
+        }
+        return false;
+      }
+  },
    methods: {
     logout () {
       this.$store.dispatch('logout')
+    },
+    login(){
+      this.$router.push('login');
+    },
+    write(){
+      this.$router.push('write');
     }
    }
 };

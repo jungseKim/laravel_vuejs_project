@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\postController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/api/post', [postController::class, 'posts']);
+
+// Route::post('/api/posts', [postController::class, 'store']);
+
+Route::middleware('auth:sanctum')->post('/api/posts', [postController::class, 'store']);
