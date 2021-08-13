@@ -64,7 +64,7 @@ import axios from 'axios'
       name: '',
        password:'',
       password2:'',
-      password_confirmation:'',
+      password_confirmation:true,
       nameRules: [
         v => !!v || 'Name is required',
         v => (v && v.length <= 10) || 'Name must be less than 10 characters',
@@ -97,8 +97,8 @@ import axios from 'axios'
        }).then(response=>{
               console.log(response.status)
               this.$router.push('/login');
-       }).catch(response=>{
-               console.log(response.data);
+       }).catch(err=>{
+               console.log(err.response.data);
                alert('사용불가능한 이메일 입니다')
                this.email='';
                

@@ -8,10 +8,10 @@
                     <v-row>
                         <v-col v-for="book in props.items" :key="book.id" cols="4">
                             <v-card >
-                                <v-img max-height="150" contain :src="book.cover"/>
+                                <v-img max-height="150" contain :src="'http://localhost:8000/storage/image/'+serSerarch(book.img)"/>
                                 <v-divider></v-divider>
                                 <v-card-title>
-                                    <router-link :to="'/books/'+book.id">{{book.title}}</router-link>
+                                    <router-link :to="'/show/'+book.id">{{book.title}}</router-link>
                                 </v-card-title>
                                 <v-card-subtitle>{{book.created_at.slice(0,10)}}</v-card-subtitle>
                             </v-card>
@@ -28,6 +28,13 @@ export default {
        data(){
               return{
                      items:[]
+              }
+       },
+       methods:{
+              serSerarch(e){
+                     if(!e){
+                            return 'noimage.jpg'
+                     }else{return e}
               }
        },
        mounted(){

@@ -47,7 +47,10 @@ export default new Vuex.Store({
       }
     },
 
-    logout ({ commit }) {
+    logout({ commit }) {
+      axios.post('logout').then(response => {
+         console.log(response.data)
+       })
       commit('clearUserData')
     }
   },

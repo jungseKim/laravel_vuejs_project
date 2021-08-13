@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Route::get('/api/post', [postController::class, 'posts']);
 
+Route::middleware('auth:sanctum')->get('/api/show/{id}', [postController::class, 'show']);
+
 // Route::post('/api/posts', [postController::class, 'store']);
 
 Route::middleware('auth:sanctum')->post('/api/posts', [postController::class, 'store']);
