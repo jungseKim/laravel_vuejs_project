@@ -19,4 +19,15 @@ class UserController extends Controller
         // $value = $request->cookie('my-app-token');
         // $request->bearerToken()
     }
+    public function index(Request $request)
+    {
+
+        $users = User::all();
+        $currentUser = Auth::user();
+
+        return response()->json([
+            'users' => $users,
+            'currentUser' => $currentUser
+        ], status: 200);
+    }
 }

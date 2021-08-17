@@ -6,6 +6,7 @@ import map from '@/components/map.vue'
 import home from '../views/Home.vue'
 import write from '../views/write.vue'
 import Show from '../views/Show.vue'
+import chat from '../views/Chat.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,6 +16,7 @@ const routes = [
   { path: '/write', name: 'write', component: write, meta: { auth: true } },
     { path: '/Show/:postId', name: 'Show', component: Show },
   { path: '/map', name: 'map', component: map,meta:{auth:true} },
+  { path: '/chat', name: 'chat', component: chat,meta:{auth:true} }
    
 ]
 

@@ -48,3 +48,6 @@ Route::post('/login', function (Request $request) {
 
     return response($response, 201);
 });
+
+
+Route::middleware('auth:sanctum')->get('/index', [UserController::class, 'index']);
