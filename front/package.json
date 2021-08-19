@@ -10,7 +10,10 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "pusher-js-auth": "^4.0.0",
+    "pusher-vue": "^1.0.8",
     "vue": "^2.6.11",
+    "vue-pusher": "^1.1.0",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0",
     "vuex": "^3.6.2"

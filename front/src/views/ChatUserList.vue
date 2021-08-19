@@ -1,12 +1,14 @@
 <template>
-    <div class="w-1/5 border-r-2 border-solid border-gray-600">
+    <div class="text-center" justify="center">
         <div
             v-for="user in usersWithoutSignedInUser"
             :key="user.id"
-            class="p-2 border-b-2 border-gray-600 hover:bg-gray-300 cursor-pointer"
+          
             @click="updateChatWith(user.id)"
         >
-            {{ user.name }}
+        <p v-if="user.id==chatWith" class="primary">채팅중: {{ user.name }}</p>
+        <p v-else 
+           class="teal">{{ user.name }}</p>
         </div>
     </div>
 </template>
@@ -14,6 +16,12 @@
 <script>
 import axios from 'axios'
     export default {
+        props:{
+            chatWith:{
+                type:Number,
+                required:false
+            }
+        },
         computed: {
             usersWithoutSignedInUser() {
                 return this.users.filter(user => {

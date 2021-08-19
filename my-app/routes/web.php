@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\postController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,7 @@ Route::middleware('auth:sanctum')->get('/api/show/{id}', [postController::class,
 // Route::post('/api/posts', [postController::class, 'store']);
 
 Route::middleware('auth:sanctum')->post('/api/posts', [postController::class, 'store']);
+
+Route::middleware('auth:sanctum')->post('/api/messages', [MessageController::class, 'store']);
+
+Route::middleware('auth:sanctum')->get('/api/messages', [MessageController::class, 'index']);
