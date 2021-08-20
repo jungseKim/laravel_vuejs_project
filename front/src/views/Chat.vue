@@ -49,15 +49,17 @@
                 chatWith: null,
                 text:null,
                 messages:[],
-                crrunt:null
+                crrunt:this.$store.state.user.user.id
+                      
             }
-        },
+        }
+        ,
         mounted() {
             Pusher.logToConsole = true;
                 const pusher = new Pusher('09b388928591241646f6', {
                cluster: 'ap3',
              });
-           const channel = pusher.subscribe('chat',);
+           const channel = pusher.subscribe('chat'+this.crrunt);
       channel.bind('App\\Events\\MessageSent', e=>{
           if(e.message.to===this.crrunt)
             this.messages.push(e.message);
@@ -78,7 +80,7 @@
                     }
                 }).then(res => {
                     console.log(res.data.crrunt);
-                    this.crrunt=res.data.crrunt;
+                    // this.crrunt=res.data.crrunt;
                    this.messages = res.data.messages;
                 })
             }
