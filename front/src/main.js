@@ -4,7 +4,7 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import store from './store'
 import axios from 'axios'
-
+import VueCookies from "vue-cookies"
 
 Vue.config.productionTip = false
 
@@ -13,6 +13,7 @@ axios.defaults.withCredentials=true
 axios.defaults.baseURL = 'http://localhost:8000/api'
 
 new Vue({
+  VueCookies,
   router,
   store,
   vuetify,

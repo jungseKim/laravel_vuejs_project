@@ -34,10 +34,19 @@
       register
     </v-btn>
 
+    <v-btn
+      color="error"
+      class="mr-4"
+      @click="google"
+    >
+      goole login
+    </v-btn>
+
   </v-form>
 </template>
 
 <script>
+
 export default {
   data () {
     return {
@@ -68,6 +77,17 @@ export default {
       }
       else{
         this.$router.push('register')
+      }
+    },
+   async google(){
+    try {
+      window.location.href="http://localhost:8000/api/google/login"
+      //   const response = await axios.get('http://localhost:8000/sanctum/csrf-cookie')
+      // console.log(response.status);
+    //  const {data}= await axios.get('/google/login')
+      //  this.$store.commit('setUserData', data);
+      } catch (err) {
+        console.error(err);
       }
     }
   }

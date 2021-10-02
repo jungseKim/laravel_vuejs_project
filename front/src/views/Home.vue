@@ -43,6 +43,11 @@ export default {
                      console.log(response.data)
                      this.items=response.data
               })
+       // axios.get('loginCheck')
+       //   .then(response=>{
+       //               console.log(response.data)
+       //               this.items=response.data
+       //        })
        }
 }
 </script>

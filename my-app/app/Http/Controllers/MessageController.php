@@ -25,7 +25,7 @@ class MessageController extends Controller
         $message->from = Auth::user()->id;
 
         $message->save();
-
+        
         MessageSent::dispatch($message);
 
         return response()->json([

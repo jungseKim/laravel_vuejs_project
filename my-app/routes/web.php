@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\postController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('api/google/login', [GoogleController::class, 'redirect'])
+    ->name('google');
+
+Route::get('api/google/callback',  [GoogleController::class, 'callback']);
+
 
 Route::get('/', function () {
     return view('welcome');
